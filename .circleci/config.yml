@@ -2,10 +2,10 @@ version: 2
 jobs: # we now have TWO jobs, so that a workflow can coordinate them!
   one: # This is our first job.
     docker: # it uses the docker executor
-       - image: firsttry
+       - image: cimg/ruby:2.6.8 # specifically, a docker image with with ruby 2.6.8
         auth:
-          username: sakshiegade12
-          password: Sakshi@0990 # context / project UI env-var reference
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD # context / project UI env-var reference
     # Steps are a list of commands to run inside the docker container above.
     steps:
       - checkout # this pulls code down from GitHub
@@ -15,8 +15,8 @@ jobs: # we now have TWO jobs, so that a workflow can coordinate them!
    docker: # it runs inside a docker image, the same as above.
      - image: cimg/ruby:3.0.2
       auth:
-        username: sakshiegade12
-        password: Sakshi@0990 # context / project UI env-var reference
+        username: mydockerhub-user
+        password: $DOCKERHUB_PASSWORD # context / project UI env-var reference
   steps:
       - checkout
       - run: echo "A more familiar hi" # we run a similar echo command to above.
